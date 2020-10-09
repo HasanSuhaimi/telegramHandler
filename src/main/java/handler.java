@@ -1,5 +1,3 @@
-package test;
-
 import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
@@ -8,7 +6,7 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
-public class handlerTest extends TelegramLongPollingBot {
+public class handler extends TelegramLongPollingBot {
 
     private static int counter = 0;
     private static int calculatorCounter = 0;
@@ -17,7 +15,7 @@ public class handlerTest extends TelegramLongPollingBot {
         ApiContextInitializer.init();
         TelegramBotsApi botsApi = new TelegramBotsApi();
         try {
-            botsApi.registerBot(new handlerTest());
+            botsApi.registerBot(new handler());
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }
@@ -54,7 +52,7 @@ public class handlerTest extends TelegramLongPollingBot {
             //create a object that contains the information to send back the message
             SendMessage sendMessageRequest = new SendMessage();
             sendMessageRequest.setChatId(message.getChatId().toString());
-            //sendMessageRequest.setText("Calculate? what do you want to calculate?");
+            sendMessageRequest.setText("What do you want to calculate?\nformat=1+1");
 
             try {
                 execute(sendMessageRequest);
@@ -62,20 +60,8 @@ public class handlerTest extends TelegramLongPollingBot {
                 //do some error handling
             }
         }
-        else if( textLower != null && calculatorCounter == 1 ) {
-            calculatorCounter++;
-            SendMessage sendMessageRequest = new SendMessage();
-            sendMessageRequest.setChatId(message.getChatId().toString());
-            sendMessageRequest.setText("use this format to calculate: 1+1");
 
-            try {
-                execute(sendMessageRequest);
-            } catch (TelegramApiException e) {
-                //do some error handling
-            }
-
-        }
-        else if( calculatorCounter > 1 && (textLower.contains("+") || textLower.contains("-") || textLower.contains("*") || textLower.contains("//") )) {
+        else if( calculatorCounter > 0 && (textLower.contains("+") || textLower.contains("-") || textLower.contains("*") || textLower.contains("//") )) {
 
             String a = text;
             System.out.println(a);
