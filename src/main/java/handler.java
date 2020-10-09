@@ -127,7 +127,7 @@ public class handler extends TelegramLongPollingBot {
      */
     @Override
     public String getBotUsername() {
-        return "KitchenBot";
+        return "hasBot";
     }
 
     /**
@@ -136,7 +136,7 @@ public class handler extends TelegramLongPollingBot {
      */
     @Override
     public String getBotToken() {
-        String apiToken = "1274132052:AAG-pR735h24p2HQkWvXXYiroERsAo9j2Gg";
+        String apiToken = "1282972627:AAE0Ib-C7xSPyEt8LXE_0_-EqQ3bhHGnq6o";
         return apiToken;
     }
 
