@@ -101,7 +101,7 @@ public class handler extends TelegramLongPollingBot {
 
             try {
                 String nowDate = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date());
-                //access.runAppend(data.get(0),data.get(1),nowDate,"","");
+                access.runAppend(data.get(0),data.get(1),nowDate,"","","");
                 execute(sendMessageRequest);
             } catch (TelegramApiException e) {
                 //do some error handling
@@ -138,12 +138,14 @@ public class handler extends TelegramLongPollingBot {
             accessAPI access = new accessAPI();
 
             try {
-                access.runAppend(data.get(0),data.get(1),data.get(2),data.get(3),data.get(4),data.get(5));
+                access.runAppend(data.get(0),data.get(1),data.get(2),data.get(3),data.get(4),"");
                 execute(sendMessageRequest);
             } catch (TelegramApiException e) {
                 //do some error handling
+                System.out.println(e);
             } catch (Exception e) {
                 //do some error handling
+                System.out.println(e);
             }
 
         }
