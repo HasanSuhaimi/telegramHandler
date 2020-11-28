@@ -6,14 +6,23 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Arrays;
+
+
 public class handler extends TelegramLongPollingBot {
 
     private static int counter = 0;
     private static int calculatorCounter = 0;
 
     public static void main(String[] args) {
+
         ApiContextInitializer.init();
         TelegramBotsApi botsApi = new TelegramBotsApi();
+
         try {
             botsApi.registerBot(new handler());
         } catch (TelegramApiException e) {
@@ -29,11 +38,11 @@ public class handler extends TelegramLongPollingBot {
 
         Message message = update.getMessage();
         String text = message.getText();
-        System.out.println(text);
+        //System.out.println(text);
 
         String textLower = text.toLowerCase();
 
-        if(text != null && counter == 0 ) {
+        if(text != null && counter < 1 ) {
             counter++;
             //create a object that contains the information to send back the message
             SendMessage sendMessageRequest = new SendMessage();
@@ -47,73 +56,93 @@ public class handler extends TelegramLongPollingBot {
             }
 
         }
-        else if(textLower.contains("calculate")) {
-            calculatorCounter ++;
-            //create a object that contains the information to send back the message
+        else if(textLower.contains("add") && textLower.contains("sheet")) {
+
+            counter++;
+
             SendMessage sendMessageRequest = new SendMessage();
             sendMessageRequest.setChatId(message.getChatId().toString());
-            sendMessageRequest.setText("What do you want to calculate?\nformat=1+1");
+            sendMessageRequest.setText("send in this format add::item,price");
 
             try {
                 execute(sendMessageRequest);
             } catch (TelegramApiException e) {
                 //do some error handling
             }
-        }
 
-        else if( calculatorCounter > 0 && (textLower.contains("+") || textLower.contains("-") || textLower.contains("*") || textLower.contains("//") )) {
+        }else if(textLower.contains("d::") ) {
 
-            String a = text;
-            System.out.println(a);
-            String operators[]=a.split("[0-9]+");
-            String operands[]=a.split("[+-]");
-            int agregate = Integer.parseInt(operands[0]);
-            for(int i=1;i<operands.length;i++){
-                if(operators[i].equals("+"))
-                    agregate += Integer.parseInt(operands[i]);
-                else
-                    agregate -= Integer.parseInt(operands[i]);
-            }
-
-            String value = Integer.toString(agregate);
+            counter++;
 
             SendMessage sendMessageRequest = new SendMessage();
             sendMessageRequest.setChatId(message.getChatId().toString());
-            sendMessageRequest.setText(value);
+            sendMessageRequest.setText("received");
+            //split from new line
+            String targetInput = textLower.substring(textLower.lastIndexOf(":")+1);
 
+            String str[] = targetInput.split(",");
+
+            List<String> al = new ArrayList<String>();
+            al = Arrays.asList(str);
+
+            List<String> data = new ArrayList<String>();
+
+            for(int x = 0 ; x < al.size() ; x++){
+
+                //get value after :
+                String item = al.get(x).substring(al.get(x).lastIndexOf(":") + 1);
+                data.add(item);
+                //remove any spaces
+                String formattedItem = item.replaceAll("\\s+","");
+                System.out.println(formattedItem);
+
+            }
+            accessAPI access = new accessAPI();
 
             try {
+                String nowDate = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date());
+                //access.runAppend(data.get(0),data.get(1),nowDate,"","");
                 execute(sendMessageRequest);
             } catch (TelegramApiException e) {
                 //do some error handling
+                System.out.println(e);
+            } catch (Exception e) {
+                //do some error handling
+                System.out.println(e);
             }
-        }
 
-        if (textLower.contains("end") || textLower.contains("bye") || textLower.contains("thank")) {
-            counter = 0;
-            calculatorCounter = 0;
-            //create a object that contains the information to send back the message
+        }
+        else if(textLower.contains("extraction") ) {
+
             SendMessage sendMessageRequest = new SendMessage();
             sendMessageRequest.setChatId(message.getChatId().toString());
-            sendMessageRequest.setText("Thank you byee");
+            sendMessageRequest.setText("received");
+            //split from new line
+            String str[] = textLower.split("\\r?\\n");
+
+            List<String> al = new ArrayList<String>();
+            al = Arrays.asList(str);
+
+            List<String> data = new ArrayList<String>();
+
+            for(int x = 1 ; x < al.size() ; x++){
+
+                //get value after :
+                String item = al.get(x).substring(al.get(x).lastIndexOf(":") + 1);
+                data.add(item);
+                //remove any spaces
+                String formattedItem = item.replaceAll("\\s+","");
+                System.out.println(formattedItem);
+
+            }
+            accessAPI access = new accessAPI();
 
             try {
+                access.runAppend(data.get(0),data.get(1),data.get(2),data.get(3),data.get(4),data.get(5));
                 execute(sendMessageRequest);
             } catch (TelegramApiException e) {
                 //do some error handling
-            }
-        }
-        else if (textLower.contains("wtf")) {
-            counter = 0;
-            calculatorCounter = 0;
-            //create a object that contains the information to send back the message
-            SendMessage sendMessageRequest = new SendMessage();
-            sendMessageRequest.setChatId(message.getChatId().toString());
-            sendMessageRequest.setText("Nope no cursing byee");
-
-            try {
-                execute(sendMessageRequest);
-            } catch (TelegramApiException e) {
+            } catch (Exception e) {
                 //do some error handling
             }
 
