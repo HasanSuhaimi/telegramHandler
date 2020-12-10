@@ -54,7 +54,7 @@ public class accessAPI {
         );
 
         //final Credential credential = new accessAPI().authorize(HTTP_TRANSPORT, JSON_FACTORY, CLIENT_ID, CLIENT_SECRET, SCOPE);
-        GoogleCredential credential = GoogleCredential.fromStream(new FileInputStream("src/main/java/access.json"))
+        GoogleCredential credential = GoogleCredential.fromStream(new FileInputStream("/home/dev/telegramHandler/telegramHandler/src/main/java/access.json"))
             .createScoped(Collections.singleton(SCOPE));
         
         requestBody.setValues(values);
