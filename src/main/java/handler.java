@@ -129,7 +129,7 @@ public class handler extends TelegramLongPollingBot {
             for(int x = 1 ; x < al.size() ; x++){
 
                 //get value after :
-                String item = al.get(x).substring(al.get(x).lastIndexOf(":") + 1);
+                String item = al.get(x).substring(al.get(x).lastIndexOf(":"));
                 data.add(item);
                 //remove any spaces
                 String formattedItem = item.replaceAll("\\s+","");
@@ -166,7 +166,7 @@ public class handler extends TelegramLongPollingBot {
             for(int x = 1 ; x < al.size() ; x++){
 
                 //get value after :
-                String item = al.get(x).substring(al.get(x).lastIndexOf(":") + 1);
+                String item = al.get(x).substring(al.get(x).lastIndexOf(":"));
                 data.add(item);
                 //remove any spaces
                 String formattedItem = item.replaceAll("\\s+","");
