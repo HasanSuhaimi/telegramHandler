@@ -102,7 +102,7 @@ public class handler extends TelegramLongPollingBot {
          
             try {
                 String nowDate = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date());
-                access.runAppend(data.get(0),data.get(1),nowDate,"","","");
+                access.runAppend(data,"");
                 execute(sendMessageRequest);
             } catch (TelegramApiException e) {
                 //do some error handling
