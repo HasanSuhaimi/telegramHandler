@@ -36,6 +36,8 @@ public class handler extends TelegramLongPollingBot {
     @Override
     public void onUpdateReceived(Update update) {
 
+        
+        accessAPI access = new accessAPI();
         Message message = update.getMessage();
         String text = message.getText();
         //System.out.println(text);
@@ -97,8 +99,7 @@ public class handler extends TelegramLongPollingBot {
                 System.out.println(formattedItem);
 
             }
-            accessAPI access = new accessAPI();
-
+         
             try {
                 String nowDate = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date());
                 access.runAppend(data.get(0),data.get(1),nowDate,"","","");
@@ -135,10 +136,44 @@ public class handler extends TelegramLongPollingBot {
                 System.out.println(formattedItem);
 
             }
-            accessAPI access = new accessAPI();
 
             try {
-                access.runAppend(data.get(0),data.get(1),data.get(2),data.get(3),data.get(4),"");
+                access.runAppend(data,"Extraction");
+                execute(sendMessageRequest);
+            } catch (TelegramApiException e) {
+                //do some error handling
+                System.out.println(e);
+            } catch (Exception e) {
+                //do some error handling
+                System.out.println(e);
+            }
+
+        }else if(textLower.contains("extraction") ) {
+
+            SendMessage sendMessageRequest = new SendMessage();
+            sendMessageRequest.setChatId(message.getChatId().toString());
+            sendMessageRequest.setText("received");
+            //split from new line
+            String str[] = textLower.split("\\r?\\n");
+
+            List<String> al = new ArrayList<String>();
+            al = Arrays.asList(str);
+
+            List<String> data = new ArrayList<String>();
+
+            for(int x = 1 ; x < al.size() ; x++){
+
+                //get value after :
+                String item = al.get(x).substring(al.get(x).lastIndexOf(":") + 1);
+                data.add(item);
+                //remove any spaces
+                String formattedItem = item.replaceAll("\\s+","");
+                System.out.println(formattedItem);
+
+            }
+
+            try {
+                access.runAppend(data,"Extraction");
                 execute(sendMessageRequest);
             } catch (TelegramApiException e) {
                 //do some error handling
