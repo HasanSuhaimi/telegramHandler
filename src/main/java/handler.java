@@ -137,6 +137,8 @@ public class handler extends TelegramLongPollingBot {
 
             }
 
+            data.add(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date()));
+            
             try {
                 access.runAppend(data,"Extraction");
                 execute(sendMessageRequest);
@@ -172,6 +174,8 @@ public class handler extends TelegramLongPollingBot {
 
             }
 
+            data.add(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date()));
+            
             try {
                 access.runAppend(data,"Housekeeping");
                 execute(sendMessageRequest);
