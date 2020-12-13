@@ -148,7 +148,7 @@ public class handler extends TelegramLongPollingBot {
                 System.out.println(e);
             }
 
-        }else if(textLower.contains("extraction") ) {
+        }else if(textLower.contains("housekeeping") ) {
 
             SendMessage sendMessageRequest = new SendMessage();
             sendMessageRequest.setChatId(message.getChatId().toString());
@@ -173,7 +173,7 @@ public class handler extends TelegramLongPollingBot {
             }
 
             try {
-                access.runAppend(data,"Extraction");
+                access.runAppend(data,"Housekeeping");
                 execute(sendMessageRequest);
             } catch (TelegramApiException e) {
                 //do some error handling
