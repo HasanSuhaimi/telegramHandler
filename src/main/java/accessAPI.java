@@ -28,7 +28,7 @@ import java.lang.Object;
 
 public class accessAPI {
 
-    public void runAppend (String a, String b, String c, String d, String e, String f) throws Exception {
+    public void runAppend (List<String> dataValue, String range) throws Exception {
 
         /** OAuth 2 scope. */
         String SCOPE = "https://www.googleapis.com/auth/spreadsheets";
@@ -40,15 +40,17 @@ public class accessAPI {
         JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
 
         String spreadsheetId = "14ql0geK26IPAvj8KlD-Ljtv9IqiiRR7WsVEKFSvSEYY";
-        String range = "A1";
 
         ValueRange requestBody = new ValueRange();
-        requestBody.setRange("A1");
+        requestBody.setRange(range);
+
+        String[] data = new String[dataValue.size()];
+        data = dataValue.toArray(data);
 
         List<List<Object>> values = Arrays.asList(
                 Arrays.asList(
                         // Cell values ...
-                        a,b,c,d,e,f
+                        data
                 )
                 // Additional rows ...
         );
