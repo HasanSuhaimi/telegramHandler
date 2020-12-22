@@ -35,12 +35,11 @@ public class ilmuanHandler extends TelegramLongPollingBot {
      */
     @Override
     public void onUpdateReceived(Update update) {
-
-        
         accessAPI access = new accessAPI();
         Message message = update.getMessage();
         String text = message.getText();
-        //System.out.println(text);
+        String textLower = text.toLowerCase();
+        System.out.println(text);
 
         String textLower = text.toLowerCase();
 
