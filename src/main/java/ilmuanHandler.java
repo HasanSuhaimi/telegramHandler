@@ -24,7 +24,7 @@ public class ilmuanHandler extends TelegramLongPollingBot {
         TelegramBotsApi botsApi = new TelegramBotsApi();
 
         try {
-            botsApi.registerBot(new ilmuanhandler());
+            botsApi.registerBot(new ilmuanHandler());
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }
