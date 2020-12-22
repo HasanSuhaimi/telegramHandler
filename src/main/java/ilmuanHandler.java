@@ -41,8 +41,6 @@ public class ilmuanHandler extends TelegramLongPollingBot {
         String textLower = text.toLowerCase();
         System.out.println(text);
 
-        String textLower = text.toLowerCase();
-
         //ilmuanbot chat templates
         if(text != null && counter < 1 ) {
             counter++;
@@ -108,7 +106,7 @@ public class ilmuanHandler extends TelegramLongPollingBot {
                 //do some error handling
             }
         }
-        else if(lowerText.contains("form") && counter > 1) {
+        else if(textLower.contains("form") && counter > 1) {
             counter=0;
             //create a object that contains the information to send back the message
             SendMessage sendMessageRequest = new SendMessage();
