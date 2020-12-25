@@ -85,6 +85,41 @@ public class accessAPI {
 
         return targetRow;
     }
+    //clear specific row
+    public void clearRow (List<String> dataValue) throws Exception {
+
+        /** OAuth 2 scope. */
+        String SCOPE = "https://www.googleapis.com/auth/spreadsheets";
+
+        /** Global instance of the HTTP transport. */
+        HttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
+
+        /** Global instance of the JSON factory. */
+        JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
+
+        String spreadsheetId = "14ql0geK26IPAvj8KlD-Ljtv9IqiiRR7WsVEKFSvSEYY";
+        //set the range to e:g Extraction!A3:J3
+        String range = dataValue.get(0)+"!A"+dataValue.get(1)+":J"+dataValue.get(1);
+        //remove all whitespace
+        range = range.replaceAll("\\s+","");
+
+        //final Credential credential = new accessAPI().authorize(HTTP_TRANSPORT, JSON_FACTORY, CLIENT_ID, CLIENT_SECRET, SCOPE);
+        GoogleCredential credential = GoogleCredential.fromStream(new FileInputStream("/home/dev/telegramHandler/telegramHandler/src/main/java/access.json"))
+                .createScoped(Collections.singleton(SCOPE));
+
+        Sheets sheetsService = new Sheets.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential)
+                .setApplicationName("appendSheet")
+                .build();
+
+        ClearValuesRequest requestBody = new ClearValuesRequest();
+        Sheets.Spreadsheets.Values.Clear request =
+                sheetsService.spreadsheets().values().clear(spreadsheetId, range, requestBody);
+        ClearValuesResponse clearResponse = request.execute();
+
+        // TODO: Change code below to process the `response` object:
+        System.out.println(clearResponse);
+
+    }
 
     /** Authorizes the installed application to access user's protected data. */
     public Credential authorize(HttpTransport HTTP_TRANSPORT, JsonFactory JSON_FACTORY, String CLIENT_ID, String CLIENT_SECRET, String SCOPE) throws Exception {
