@@ -58,52 +58,36 @@ public class handler extends TelegramLongPollingBot {
             }
 
         }
-        else if(textLower.contains("add") && textLower.contains("sheet")) {
-
-            counter++;
-
+        else if(textLower.contains("clear") && textLower.contains("form")) {
             SendMessage sendMessageRequest = new SendMessage();
             sendMessageRequest.setChatId(message.getChatId().toString());
-            sendMessageRequest.setText("send in this format add::item,price");
 
-            try {
-                execute(sendMessageRequest);
-            } catch (TelegramApiException e) {
-                //do some error handling
-            }
-
-        }else if(textLower.contains("d::") ) {
-
-            counter++;
-
-            SendMessage sendMessageRequest = new SendMessage();
-            sendMessageRequest.setChatId(message.getChatId().toString());
-            sendMessageRequest.setText("received");
             //split from new line
-            String targetInput = textLower.substring(textLower.lastIndexOf(":")+1);
-
-            String str[] = targetInput.split(",");
+            String str[] = textLower.split("\\r?\\n");
 
             List<String> al = new ArrayList<String>();
             al = Arrays.asList(str);
 
             List<String> data = new ArrayList<String>();
 
-            for(int x = 0 ; x < al.size() ; x++){
+            for (int x = 1; x < al.size(); x++) {
 
                 //get value after :
                 String item = al.get(x).substring(al.get(x).lastIndexOf(":") + 1);
                 data.add(item);
                 //remove any spaces
-                String formattedItem = item.replaceAll("\\s+","");
+                String formattedItem = item.replaceAll("\\s+", "");
                 System.out.println(formattedItem);
 
             }
-         
+
+            String time = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date());
+
             try {
-                String nowDate = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date());
-                access.runAppend(data,"");
+                access.clearRow(data);
+                sendMessageRequest.setText("Deleted row"+ data.get(1) + " from"+ data.get(0) + "at "+ time);
                 execute(sendMessageRequest);
+                return;
             } catch (TelegramApiException e) {
                 //do some error handling
                 System.out.println(e);
@@ -111,7 +95,6 @@ public class handler extends TelegramLongPollingBot {
                 //do some error handling
                 System.out.println(e);
             }
-
         }
         else if(textLower.contains("extraction") ) {
 
