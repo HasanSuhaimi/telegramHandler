@@ -16,7 +16,7 @@ import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.model.AppendValuesResponse;
 import com.google.api.services.sheets.v4.model.UpdateValuesResponse;
 import com.google.api.services.sheets.v4.model.ValueRange;
-
+import com.google.api.services.sheets.v4.model.*;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -28,7 +28,7 @@ import java.lang.Object;
 
 public class accessAPI {
 
-    public void runAppend (List<String> dataValue, String range) throws Exception {
+    public String runAppend (List<String> dataValue, String range) throws Exception {
 
         /** OAuth 2 scope. */
         String SCOPE = "https://www.googleapis.com/auth/spreadsheets";
@@ -74,8 +74,16 @@ public class accessAPI {
 
         // TODO: Change code below to process the `response` object:
         System.out.println(postResponse);
+        
+        //get the index of updated row using get request
+        Sheets.Spreadsheets.Values.Get getRequest =
+                sheetsService.spreadsheets().values().get(spreadsheetId, range);
+        ValueRange response = getRequest.execute();
 
+        int latestRow = response.getValues().size();
+        String targetRow = Integer.toString(latestRow);
 
+        return targetRow;
     }
 
     /** Authorizes the installed application to access user's protected data. */
