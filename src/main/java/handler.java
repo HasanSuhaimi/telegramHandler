@@ -117,7 +117,7 @@ public class handler extends TelegramLongPollingBot {
 
             SendMessage sendMessageRequest = new SendMessage();
             sendMessageRequest.setChatId(message.getChatId().toString());
-            sendMessageRequest.setText("received");
+            
             //split from new line
             String str[] = textLower.split("\\r?\\n");
 
@@ -140,8 +140,10 @@ public class handler extends TelegramLongPollingBot {
             data.add(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date()));
             
             try {
-                access.runAppend(data,"Extraction");
+                String updatedRow = access.runAppend(data,"Extraction");
+                sendMessageRequest.setText("received, row "+updatedRow+" updated");
                 execute(sendMessageRequest);
+                
             } catch (TelegramApiException e) {
                 //do some error handling
                 System.out.println(e);
@@ -154,7 +156,7 @@ public class handler extends TelegramLongPollingBot {
 
             SendMessage sendMessageRequest = new SendMessage();
             sendMessageRequest.setChatId(message.getChatId().toString());
-            sendMessageRequest.setText("received");
+            
             //split from new line
             String str[] = textLower.split("\\r?\\n");
 
@@ -177,7 +179,8 @@ public class handler extends TelegramLongPollingBot {
             data.add(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date()));
             
             try {
-                access.runAppend(data,"Housekeeping");
+                String updatedRow = access.runAppend(data,"Housekeeping");
+                sendMessageRequest.setText("received, row "+updatedRow+" updated");
                 execute(sendMessageRequest);
             } catch (TelegramApiException e) {
                 //do some error handling
