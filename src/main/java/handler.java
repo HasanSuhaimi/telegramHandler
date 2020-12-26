@@ -58,6 +58,27 @@ public class handler extends TelegramLongPollingBot {
             }
 
         }
+        else if(textLower.contains("/") && textLower.contains("sort") && textLower.contains("sheet") && textLower.contains(":")) {
+            SendMessage sendMessageRequest = new SendMessage();
+            sendMessageRequest.setChatId(message.getChatId().toString());
+
+            //get value after :
+            String range = textLower.substring(textLower.lastIndexOf(":") + 1);
+            System.out.println(range);
+
+            try {
+                access.sortSheet(range);
+                sendMessageRequest.setText("Data in "+ range +" sorted");
+                execute(sendMessageRequest);
+                return;
+            } catch (TelegramApiException e) {
+                //do some error handling
+                System.out.println(e);
+            } catch (Exception e) {
+                //do some error handling
+                System.out.println(e);
+            }
+        }
         else if(textLower.contains("clear") && textLower.contains("form")) {
             SendMessage sendMessageRequest = new SendMessage();
             sendMessageRequest.setChatId(message.getChatId().toString());
