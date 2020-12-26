@@ -68,7 +68,7 @@ public class handler extends TelegramLongPollingBot {
 
             try {
                 access.sortSheet(range);
-                sendMessageRequest.setText("Data in "+ range +" sorted");
+                sendMessageRequest.setText("Data in"+ range +" sorted");
                 execute(sendMessageRequest);
                 return;
             } catch (TelegramApiException e) {
