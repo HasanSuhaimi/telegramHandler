@@ -35,6 +35,7 @@ public class ilmuanHandler extends TelegramLongPollingBot {
      */
     @Override
     public void onUpdateReceived(Update update) {
+        int option = 0;
         accessAPI access = new accessAPI();
         Message message = update.getMessage();
         String text = message.getText();
@@ -43,7 +44,7 @@ public class ilmuanHandler extends TelegramLongPollingBot {
 
         //ilmuanbot chat templates
         if(text != null && counter == 0) {
-            counter = 1;
+            counter++;
             //create a object that contains the information to send back the message
             SendMessage sendMessageRequest = new SendMessage();
             sendMessageRequest.setChatId(message.getChatId().toString());
@@ -57,13 +58,15 @@ public class ilmuanHandler extends TelegramLongPollingBot {
                 //do some error handling
             }
         }//ilmuanbot chat templates
-        else if(text.contains("1") && counter == 1 ) {
+        else if(text.contains("1") && option == 0 ) {
             counter = 0;
             //create a object that contains the information to send back the message
             SendMessage sendMessageRequest = new SendMessage();
             sendMessageRequest.setChatId(message.getChatId().toString());
             sendMessageRequest.setText("Companies often integrate different web platforms for different functions – e.g. Onpay, Google Forms etc. – making the process tedious and tough to monitor.");
-
+            
+            option = 1;
+            
             try {
                 execute(sendMessageRequest);
 
@@ -88,13 +91,15 @@ public class ilmuanHandler extends TelegramLongPollingBot {
             }
 
         }
-        else if(text.contains("2") && counter == 1) {
-            counter=2;
+        else if(text.contains("2") && option == 0) {
+            counter=0;
             //create a object that contains the information to send back the message
             SendMessage sendMessageRequest = new SendMessage();
             sendMessageRequest.setChatId(message.getChatId().toString());
             sendMessageRequest.setText("Please copy the form and send us with the same format:");
 
+            option = 2;
+            
             try {
                 execute(sendMessageRequest);
                 sendMessageRequest.setText("<b>Contact Form</b>\n" +
@@ -109,13 +114,15 @@ public class ilmuanHandler extends TelegramLongPollingBot {
                 //do some error handling
             }
         }
-        else if(textLower.contains("form") && counter == 2) {
+        else if(textLower.contains("form") && option == 2) {
             counter=0;
             //create a object that contains the information to send back the message
             SendMessage sendMessageRequest = new SendMessage();
             sendMessageRequest.setChatId(message.getChatId().toString());
             sendMessageRequest.setText("Received");
 
+            option = 0;
+            
             try {
                 execute(sendMessageRequest);
                 sendMessageRequest.setText("Reply with any");
