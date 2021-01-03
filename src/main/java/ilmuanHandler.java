@@ -42,7 +42,7 @@ public class ilmuanHandler extends TelegramLongPollingBot {
         String textLower = text.toLowerCase();
         System.out.println(text + " "+ counter + " " + option);
 
-        if(textLower.contains("form") && option == 2) {
+        if(textLower.contains("form") && counter > 0 && option == 2) {
             counter=0;
             //create a object that contains the information to send back the message
             SendMessage sendMessageRequest = new SendMessage();
@@ -107,7 +107,7 @@ public class ilmuanHandler extends TelegramLongPollingBot {
 
         }
         else if(text.contains("2") && option == 0) {
-            counter=0;
+            counter++;
             //create a object that contains the information to send back the message
             SendMessage sendMessageRequest = new SendMessage();
             sendMessageRequest.setChatId(message.getChatId().toString());
