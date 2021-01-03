@@ -42,8 +42,25 @@ public class ilmuanHandler extends TelegramLongPollingBot {
         String textLower = text.toLowerCase();
         System.out.println(text);
 
+        if(textLower.contains("form") && option == 2) {
+            counter=0;
+            //create a object that contains the information to send back the message
+            SendMessage sendMessageRequest = new SendMessage();
+            sendMessageRequest.setChatId(message.getChatId().toString());
+            sendMessageRequest.setText("Received");
+
+            option = 0;
+            
+            try {
+                execute(sendMessageRequest);
+                sendMessageRequest.setText("Reply with any");
+                execute(sendMessageRequest);
+            } catch (TelegramApiException e) {
+                //do some error handling
+            }
+        }
         //ilmuanbot chat templates
-        if(text != null && counter < 1 && option == 0) {
+        else if(text != null && counter < 1 && option == 0) {
             counter++;
             //create a object that contains the information to send back the message
             SendMessage sendMessageRequest = new SendMessage();
@@ -112,25 +129,9 @@ public class ilmuanHandler extends TelegramLongPollingBot {
                 //do some error handling
             }
         }
-        else if(textLower.contains("form") && option == 2) {
-            counter=0;
-            //create a object that contains the information to send back the message
-            SendMessage sendMessageRequest = new SendMessage();
-            sendMessageRequest.setChatId(message.getChatId().toString());
-            sendMessageRequest.setText("Received");
-
-            option = 0;
-            
-            try {
-                execute(sendMessageRequest);
-                sendMessageRequest.setText("Reply with any");
-                execute(sendMessageRequest);
-            } catch (TelegramApiException e) {
-                //do some error handling
-            }
-        }
         else {
             counter = 0;
+            option = 0;
         }
 
     }
