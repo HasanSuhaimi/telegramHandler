@@ -40,7 +40,7 @@ public class ilmuanHandler extends TelegramLongPollingBot {
         Message message = update.getMessage();
         String text = message.getText();
         String textLower = text.toLowerCase();
-        System.out.println(text);
+        System.out.println(text + " "+ counter + " " + option);
 
         if(textLower.contains("form") && option == 2) {
             counter=0;
