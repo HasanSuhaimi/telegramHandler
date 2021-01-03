@@ -42,8 +42,8 @@ public class ilmuanHandler extends TelegramLongPollingBot {
         System.out.println(text);
 
         //ilmuanbot chat templates
-        if(text != null && counter ==0 ) {
-            counter++;
+        if(text != null) {
+            counter = 1;
             //create a object that contains the information to send back the message
             SendMessage sendMessageRequest = new SendMessage();
             sendMessageRequest.setChatId(message.getChatId().toString());
@@ -57,7 +57,7 @@ public class ilmuanHandler extends TelegramLongPollingBot {
                 //do some error handling
             }
         }//ilmuanbot chat templates
-        else if(text.contains("1") ) {
+        else if(text.contains("1") && counter = 1 ) {
             counter = 0;
             //create a object that contains the information to send back the message
             SendMessage sendMessageRequest = new SendMessage();
@@ -80,13 +80,15 @@ public class ilmuanHandler extends TelegramLongPollingBot {
                         "•\t<b>Alert system via Telegram:</b> Our system then immediately sends the order information to the EzDurian kitchen team via Telegram, without any manual input;\n" +
                         "•\t<b>Scheduler program:</b> We have programmed the order form to accept responses only at specified times, allowing the EzDurian team to better manage their operations.\n").setParseMode("html");
                 execute(sendMessageRequest);
+                sendMessageRequest.setText("Reply with any");
+                execute(sendMessageRequest);
 
             } catch (TelegramApiException e) {
                 //do some error handling
             }
 
         }
-        else if(text.contains("2")) {
+        else if(text.contains("2") && counter = 1) {
             counter=2;
             //create a object that contains the information to send back the message
             SendMessage sendMessageRequest = new SendMessage();
@@ -102,11 +104,12 @@ public class ilmuanHandler extends TelegramLongPollingBot {
                         "Email:\n").setParseMode("html");
                 execute(sendMessageRequest);
                 sendMessageRequest.setText("All info will be confidential");
+                execute(sendMessageRequest);
             } catch (TelegramApiException e) {
                 //do some error handling
             }
         }
-        else if(textLower.contains("form") && counter > 1) {
+        else if(textLower.contains("form") && counter == 2) {
             counter=0;
             //create a object that contains the information to send back the message
             SendMessage sendMessageRequest = new SendMessage();
@@ -114,6 +117,8 @@ public class ilmuanHandler extends TelegramLongPollingBot {
             sendMessageRequest.setText("Received");
 
             try {
+                execute(sendMessageRequest);
+                sendMessageRequest.setText("Reply with any");
                 execute(sendMessageRequest);
             } catch (TelegramApiException e) {
                 //do some error handling
