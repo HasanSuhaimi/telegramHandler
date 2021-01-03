@@ -16,7 +16,7 @@ import java.util.Arrays;
 public class ilmuanHandler extends TelegramLongPollingBot {
 
     private static int counter = 0;
-    private static int calculatorCounter = 0;
+    private static int option = 0;
 
     public static void main(String[] args) {
 
@@ -35,7 +35,6 @@ public class ilmuanHandler extends TelegramLongPollingBot {
      */
     @Override
     public void onUpdateReceived(Update update) {
-        int option = 0;
         accessAPI access = new accessAPI();
         Message message = update.getMessage();
         String text = message.getText();
@@ -113,7 +112,7 @@ public class ilmuanHandler extends TelegramLongPollingBot {
             sendMessageRequest.setChatId(message.getChatId().toString());
             sendMessageRequest.setText("Please copy the form and send us with the same format:");
 
-            option = 2;
+            option = option + 2;
             
             try {
                 execute(sendMessageRequest);
