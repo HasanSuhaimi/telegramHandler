@@ -57,7 +57,7 @@ public class ilmuanHandler extends TelegramLongPollingBot {
                 //do some error handling
             }
         }//ilmuanbot chat templates
-        else if(text.contains("1") && counter = 1 ) {
+        else if(text.contains("1") && counter == 1 ) {
             counter = 0;
             //create a object that contains the information to send back the message
             SendMessage sendMessageRequest = new SendMessage();
@@ -88,7 +88,7 @@ public class ilmuanHandler extends TelegramLongPollingBot {
             }
 
         }
-        else if(text.contains("2") && counter = 1) {
+        else if(text.contains("2") && counter == 1) {
             counter=2;
             //create a object that contains the information to send back the message
             SendMessage sendMessageRequest = new SendMessage();
