@@ -43,7 +43,7 @@ public class ilmuanHandler extends TelegramLongPollingBot {
         System.out.println(text);
 
         //ilmuanbot chat templates
-        if(text != null && counter == 0) {
+        if(text != null && counter < 1) {
             counter++;
             //create a object that contains the information to send back the message
             SendMessage sendMessageRequest = new SendMessage();
