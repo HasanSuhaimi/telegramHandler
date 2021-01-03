@@ -43,7 +43,7 @@ public class ilmuanHandler extends TelegramLongPollingBot {
         System.out.println(text);
 
         //ilmuanbot chat templates
-        if(text != null && counter < 1) {
+        if(text != null && counter < 1 && option == 0) {
             counter++;
             //create a object that contains the information to send back the message
             SendMessage sendMessageRequest = new SendMessage();
@@ -64,8 +64,6 @@ public class ilmuanHandler extends TelegramLongPollingBot {
             SendMessage sendMessageRequest = new SendMessage();
             sendMessageRequest.setChatId(message.getChatId().toString());
             sendMessageRequest.setText("Companies often integrate different web platforms for different functions – e.g. Onpay, Google Forms etc. – making the process tedious and tough to monitor.");
-            
-            option = 1;
             
             try {
                 execute(sendMessageRequest);
