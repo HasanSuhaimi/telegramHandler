@@ -27,8 +27,8 @@ import java.util.List;
 import java.lang.Object;
 
 public class accessAPI {
-
-    public String runAppend (List<String> dataValue, String range) throws Exception {
+    //append sheet
+    public String runAppend (List<String> dataValue, String range, String spreadsheetId) throws Exception {
 
         /** OAuth 2 scope. */
         String SCOPE = "https://www.googleapis.com/auth/spreadsheets";
@@ -38,9 +38,9 @@ public class accessAPI {
 
         /** Global instance of the JSON factory. */
         JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
-
+        //tesAutomate sheet
         //String spreadsheetId = "14ql0geK26IPAvj8KlD-Ljtv9IqiiRR7WsVEKFSvSEYY";
-        String spreadsheetId = "1A1g6kCiFFnJnY__Md4wTgDj-7bak6emLBsQS_Vx98fs";
+        //String spreadsheetId = "1A1g6kCiFFnJnY__Md4wTgDj-7bak6emLBsQS_Vx98fs";
 
         ValueRange requestBody = new ValueRange();
         requestBody.setRange(range);
@@ -58,8 +58,8 @@ public class accessAPI {
 
         //final Credential credential = new accessAPI().authorize(HTTP_TRANSPORT, JSON_FACTORY, CLIENT_ID, CLIENT_SECRET, SCOPE);
         GoogleCredential credential = GoogleCredential.fromStream(new FileInputStream("/home/dev/telegramHandler/telegramHandler/src/main/java/access.json"))
-            .createScoped(Collections.singleton(SCOPE));
-        
+                .createScoped(Collections.singleton(SCOPE));
+
         requestBody.setValues(values);
 
         Sheets sheetsService = new Sheets.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential)
@@ -75,7 +75,7 @@ public class accessAPI {
 
         // TODO: Change code below to process the `response` object:
         System.out.println(postResponse);
-        
+
         //get the index of updated row using get request
         Sheets.Spreadsheets.Values.Get getRequest =
                 sheetsService.spreadsheets().values().get(spreadsheetId, range);
@@ -86,6 +86,7 @@ public class accessAPI {
 
         return targetRow;
     }
+    
     //clear specific row
     public void clearRow (List<String> dataValue) throws Exception {
 
@@ -118,9 +119,9 @@ public class accessAPI {
 
         // TODO: Change code below to process the `response` object:
         System.out.println(clearResponse);
-
     }
-    public void sortSheet (String range) throws Exception {
+    //sort sheet based on the range
+    public void sortSheet (String range, String spreadsheetId) throws Exception {
 
         String SCOPE = "https://www.googleapis.com/auth/spreadsheets";
 
@@ -130,10 +131,8 @@ public class accessAPI {
         /** Global instance of the JSON factory. */
         JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
 
-        String spreadsheetId = "14ql0geK26IPAvj8KlD-Ljtv9IqiiRR7WsVEKFSvSEYY";
-
         range = range.replaceAll("\\s+","");
-        
+
         GoogleCredential credential = GoogleCredential.fromStream(new FileInputStream("/home/dev/telegramHandler/telegramHandler/src/main/java/access.json"))
                 .createScoped(Collections.singleton(SCOPE));
 
@@ -146,8 +145,6 @@ public class accessAPI {
                 sheetsService.spreadsheets().values().get(spreadsheetId, range);
         ValueRange response = getRequest.execute();
 
-        // get the last row
-        System.out.println(response.getValues().size());
         int totalRow = response.getValues().size();
 
         //get the sheet properties from spreadsheets.get api
@@ -155,9 +152,8 @@ public class accessAPI {
         ranges.add(range);
         Sheets.Spreadsheets.Get propRequest = sheetsService.spreadsheets().get(spreadsheetId);
         propRequest.setRanges(ranges);
-
         Spreadsheet propResponse = propRequest.execute();
-        System.out.println(propResponse.getSheets().get(0).getProperties().getSheetId());
+        //get the sheetID
         int sheetID = propResponse.getSheets().get(0).getProperties().getSheetId();
 
         //start the batch update to sort
@@ -189,6 +185,73 @@ public class accessAPI {
         System.out.println(batchResponse);
     }
 
+    //run google calendar service
+    public String runCalender(String range, String spreadsheetId, String calendarId) throws Exception {
+
+        /** OAuth 2 scope. */
+        String SCOPE = "https://www.googleapis.com/auth/spreadsheets";
+        String SCOPE2 = "https://www.googleapis.com/auth/calendar";
+
+        List<String> SCOPES = Arrays.asList(
+                SCOPE,SCOPE2
+        );
+
+        /** Global instance of the HTTP transport. */
+        HttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
+
+        /** Global instance of the JSON factory. */
+        JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
+
+        GoogleCredential credential = GoogleCredential.fromStream(new FileInputStream("/home/dev/telegramHandler/telegramHandler/src/main/java/access.json"))
+                .createScoped(SCOPES);
+
+        Sheets sheetsService = new Sheets.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential)
+                .setApplicationName("appendSheet")
+                .build();
+
+        //get the sheet values from spreadsheet.values api
+        Sheets.Spreadsheets.Values.Get getRequest =
+                sheetsService.spreadsheets().values().get(spreadsheetId, range);
+        ValueRange response = getRequest.execute();
+
+        // get the last row
+        int totalRow = response.getValues().size()-1;
+
+        String date = response.getValues().get(totalRow).get(0).toString();
+        String details = response.getValues().get(0).get(1).toString() + " : " + response.getValues().get(totalRow).get(1).toString()
+                            +"\n"+response.getValues().get(0).get(2).toString() + " : " + response.getValues().get(totalRow).get(2).toString()
+                            +"\n"+response.getValues().get(0).get(3).toString() + " : " + response.getValues().get(totalRow).get(3).toString()
+                            +"\n"+response.getValues().get(0).get(4).toString() + " : " + response.getValues().get(totalRow).get(4).toString();
+
+        System.out.println(response.getValues().size() + " : "+response.getValues().get(totalRow).get(0));
+
+        String startValue = date+"T10:00:00+08:00";
+        String endValue = date+"T10:30:00+08:00";
+
+        // Initialize Calendar service with valid OAuth credentials
+        Calendar service = new Calendar.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential)
+                .setApplicationName("appendSheet").build();
+
+        Event event = new Event()
+                .setSummary(range + " job schedule")
+                .setDescription(details);
+
+        DateTime startDateTime = new DateTime(startValue);
+        EventDateTime start = new EventDateTime()
+                .setDateTime(startDateTime);
+        event.setStart(start);
+
+        DateTime endDateTime = new DateTime(endValue);
+        EventDateTime end = new EventDateTime()
+                .setDateTime(endDateTime);
+        event.setEnd(end);
+
+        event = service.events().insert(calendarId, event).execute();
+        System.out.printf("Event created: %s\n", event.getHtmlLink());
+
+        return event.getHtmlLink();
+    }
+    
     /** Authorizes the installed application to access user's protected data. */
     public Credential authorize(HttpTransport HTTP_TRANSPORT, JsonFactory JSON_FACTORY, String CLIENT_ID, String CLIENT_SECRET, String SCOPE) throws Exception {
         // set up authorization code flow
@@ -231,7 +294,5 @@ public class accessAPI {
          */
         public static final String DOMAIN = "localhost";
     }
-
-
 
 }
