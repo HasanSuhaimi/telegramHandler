@@ -137,7 +137,7 @@ public class accessAPI {
         /** Global instance of the JSON factory. */
         JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
 
-        range = range.replaceAll("\\s+","");
+        //range = range.replaceAll("\\s+","");
 
         GoogleCredential credential = GoogleCredential.fromStream(new FileInputStream("/home/dev/telegramHandler/telegramHandler/src/main/java/access.json"))
                 .createScoped(Collections.singleton(SCOPE));
