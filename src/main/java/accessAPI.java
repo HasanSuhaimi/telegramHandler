@@ -224,7 +224,7 @@ public class accessAPI {
         int totalRow = response.getValues().size()-1;
 
         String date = response.getValues().get(totalRow).get(0).toString();
-        String location = response.getValues().get(totalRow).get(3).toString();
+        String location = response.getValues().get(totalRow).get(2).toString();
         String details = response.getValues().get(0).get(1).toString() + " : " + response.getValues().get(totalRow).get(1).toString()
                             +"\n"+response.getValues().get(0).get(2).toString() + " : " + response.getValues().get(totalRow).get(2).toString()
                             +"\n"+response.getValues().get(0).get(3).toString() + " : " + response.getValues().get(totalRow).get(3).toString()
