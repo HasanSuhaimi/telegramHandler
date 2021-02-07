@@ -36,7 +36,6 @@ public class handler extends TelegramLongPollingBot {
     @Override
     public void onUpdateReceived(Update update) {
 
-        
         accessAPI access = new accessAPI();
         Message message = update.getMessage();
         String text = message.getText();
@@ -117,87 +116,84 @@ public class handler extends TelegramLongPollingBot {
                 System.out.println(e);
             }
         }
-        else if(textLower.contains("extraction") ) {
+        else {
 
-            SendMessage sendMessageRequest = new SendMessage();
-            sendMessageRequest.setChatId(message.getChatId().toString());
-            
-            //split from new line
-            String str[] = textLower.split("\\r?\\n");
+            action(textLower, message, access);
 
-            List<String> al = new ArrayList<String>();
-            al = Arrays.asList(str);
+        }
 
-            List<String> data = new ArrayList<String>();
 
-            for(int x = 1 ; x < al.size() ; x++){
+    }
 
-                //get value after :
-                String item = al.get(x).substring(al.get(x).indexOf(":") + 1, al.get(x).length());
-                data.add(item);
-                //remove any spaces
-                String formattedItem = item.replaceAll("\\s+","");
-                System.out.println(formattedItem);
+    /**
+     * This method add the input text into the google sheet
+     * @param inputText
+     * @param message
+     * @param access
+     */
+    public void action(String inputText,Message message,accessAPI access) {
 
-            }
+        String spreadsheetId = "14ql0geK26IPAvj8KlD-Ljtv9IqiiRR7WsVEKFSvSEYY";
+        String calenderId = "hasansuhaimi95@gmail.com";
 
-            data.add(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date()));
-            
-            try {
-                String updatedRow = access.runAppend(data,"Extraction");
-                sendMessageRequest.setText("received, row "+updatedRow+" updated");
-                execute(sendMessageRequest);
-                
-            } catch (TelegramApiException e) {
-                //do some error handling
-                System.out.println(e);
-            } catch (Exception e) {
-                //do some error handling
-                System.out.println(e);
-            }
+        List<String> tabList = Arrays.asList("extraction","housekeeping","laundry","stock");
 
-        }else if(textLower.contains("housekeeping") ) {
+        for (String tab : tabList) {
 
-            SendMessage sendMessageRequest = new SendMessage();
-            sendMessageRequest.setChatId(message.getChatId().toString());
-            
-            //split from new line
-            String str[] = textLower.split("\\r?\\n");
+            if( inputText.contains("\n") && inputText.contains(tab)) {
 
-            List<String> al = new ArrayList<String>();
-            al = Arrays.asList(str);
+                SendMessage sendMessageRequest = new SendMessage();
+                sendMessageRequest.setChatId(message.getChatId().toString());
 
-            List<String> data = new ArrayList<String>();
+                //split from new line
+                String str[] = inputText.split("\\r?\\n");
 
-            for(int x = 1 ; x < al.size() ; x++){
+                List<String> al = Arrays.asList(str);
 
-                //get value after : 
-                String item = al.get(x).substring(al.get(x).indexOf(":") + 1, al.get(x).length());
-                data.add(item);
-                //remove any spaces
-                String formattedItem = item.replaceAll("\\s+","");
-                System.out.println(formattedItem);
+                List<String> data = new ArrayList<String>();
 
-            }
+                for(int x = 1 ; x < al.size() ; x++){
 
-            data.add(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date()));
-            
-            try {
-                String updatedRow = access.runAppend(data,"Housekeeping");
-                sendMessageRequest.setText("received, row "+updatedRow+" updated");
-                execute(sendMessageRequest);
-            } catch (TelegramApiException e) {
-                //do some error handling
-                System.out.println(e);
-            } catch (Exception e) {
-                //do some error handling
-                System.out.println(e);
+                    //get value after :
+                    String item = al.get(x).substring(al.get(x).indexOf(":") + 1, al.get(x).length());
+                    data.add(item);
+                    //remove any spaces
+                    String formattedItem = item.replaceAll("\\s+","");
+
+                }
+
+                data.add(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date()));
+
+                String output = tab.substring(0, 1).toUpperCase() + tab.substring(1);
+
+                try {
+                    String updatedRow = access.runAppend(data,output,spreadsheetId);
+                    sendMessageRequest.setText("received, row "+updatedRow+" from "+output+" updated");
+                    execute(sendMessageRequest);
+
+                    String url = access.runCalender(output,spreadsheetId,calenderId);
+                    sendMessageRequest.setText("create event, check " + url);
+                    execute(sendMessageRequest);
+
+                    access.sortSheet(output,spreadsheetId);
+                    sendMessageRequest.setText(output +" sheet sorted");
+                    execute(sendMessageRequest);
+
+                } catch (TelegramApiException e) {
+                    //do some error handling
+                    System.out.println(e);
+                } catch (Exception e) {
+                    //do some error handling
+                    System.out.println(e);
+                }
+
+
             }
 
         }
 
     }
-
+    
     /**
      * This method returns the bot's name, which was specified during registration.
      * @return bot name
