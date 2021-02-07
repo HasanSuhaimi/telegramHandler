@@ -112,10 +112,10 @@ public class handler extends TelegramLongPollingBot {
      */
     public void action(String inputText,Message message,accessAPI access) {
 
-        String spreadsheetId = "14ql0geK26IPAvj8KlD-Ljtv9IqiiRR7WsVEKFSvSEYY";
-        String calenderId = "hasansuhaimi95@gmail.com";
-
-        List<String> tabList = Arrays.asList("extraction","housekeeping","laundry","stock");
+        String spreadsheetId = "1A1g6kCiFFnJnY__Md4wTgDj-7bak6emLBsQS_Vx98fs";
+        String calenderId = "messbuddy@gmail.com";
+        
+        List<String> tabList = Arrays.asList("housekeeping","extraction","homecleaning","office cleaning","moving in/out","disinfecting");
 
         for (String tab : tabList) {
 
