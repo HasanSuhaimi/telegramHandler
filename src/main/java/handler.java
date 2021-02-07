@@ -115,7 +115,7 @@ public class handler extends TelegramLongPollingBot {
         String spreadsheetId = "1A1g6kCiFFnJnY__Md4wTgDj-7bak6emLBsQS_Vx98fs";
         String calenderId = "messbuddy@gmail.com";
         
-        List<String> tabList = Arrays.asList("housekeeping","extraction","homecleaning","officecleaning","movingin/out","disinfecting");
+        List<String> tabList = Arrays.asList("housekeeping","extraction","homecleaning","officecleaning","moving in/out","disinfecting");
 
         for (String tab : tabList) {
 
