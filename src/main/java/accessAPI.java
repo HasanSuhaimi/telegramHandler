@@ -235,7 +235,7 @@ public class accessAPI {
         System.out.println(response.getValues().size() + " : "+response.getValues().get(totalRow).get(0));
 
         String startValue = date+"T"+time+":00+08:00";
-        String endValue = date+"T"+time+"59+08:00";
+        String endValue = date+"T"+time+":59+08:00";
 
         // Initialize Calendar service with valid OAuth credentials
         Calendar service = new Calendar.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential)
