@@ -85,7 +85,7 @@ public class handler extends TelegramLongPollingBot {
             
             try {
                 access.clearRow(data,"1A1g6kCiFFnJnY__Md4wTgDj-7bak6emLBsQS_Vx98fs");
-                sendMessageRequest.setText("Deleted row"+ data.get(1) + " from"+ data.get(0) + "at "+ time);
+                sendMessageRequest.setText("Deleted row"+ data.get(1) + " from"+ data.get(0) + " at "+ time);
                 execute(sendMessageRequest);
                 System.out.println(time + " : CLEAR invoke");
                 return;
