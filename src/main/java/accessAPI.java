@@ -107,10 +107,13 @@ public class accessAPI {
 
         String spreadsheetId = "14ql0geK26IPAvj8KlD-Ljtv9IqiiRR7WsVEKFSvSEYY";
         //set the range to e:g Extraction!A3:J3
-        String range = dataValue.get(0)+"!A"+dataValue.get(1)+":J"+dataValue.get(1);
+        
+        String range = "!A"+dataValue.get(1)+":J"+dataValue.get(1);
         //remove all whitespace
         range = range.replaceAll("\\s+","");
-
+        
+        range = dataValue.get(0).trim() + range;
+        
         GoogleCredential credential = GoogleCredential.fromStream(new FileInputStream("/home/dev/telegramHandler/telegramHandler/src/main/java/access.json"))
                 .createScoped(Collections.singleton(SCOPE));
 
@@ -139,8 +142,14 @@ public class accessAPI {
         /** Global instance of the JSON factory. */
         JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
 
+        String range = "!A"+dataValue.get(1)+":J"+dataValue.get(1);
+        //remove all whitespace
+        range = range.replaceAll("\\s+","");
+        
+        range = dataValue.get(0).trim() + range;
+        
         //set the range to e:g Extraction!A3:J3
-        String range = dataValue.get(0)+"!A"+dataValue.get(1)+":J"+dataValue.get(1);
+        //String range = dataValue.get(0)+"!A"+dataValue.get(1)+":J"+dataValue.get(1);
 
         GoogleCredential credential = GoogleCredential.fromStream(new FileInputStream("/home/dev/telegramHandler/telegramHandler/src/main/java/access.json"))
                 .createScoped(Collections.singleton(SCOPE));
