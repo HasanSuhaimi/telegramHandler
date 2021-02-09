@@ -73,6 +73,7 @@ public class handler extends TelegramLongPollingBot {
 
                 //get value after :
                 String item = al.get(x).substring(al.get(x).lastIndexOf(":") + 1);
+                item.trim();
                 data.add(item);
                 //remove any spaces
                 String formattedItem = item.replaceAll("\\s+", "");
@@ -81,11 +82,12 @@ public class handler extends TelegramLongPollingBot {
             }
 
             String time = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date());
-
+            
             try {
                 access.clearRow(data,"1A1g6kCiFFnJnY__Md4wTgDj-7bak6emLBsQS_Vx98fs");
                 sendMessageRequest.setText("Deleted row"+ data.get(1) + " from"+ data.get(0) + "at "+ time);
                 execute(sendMessageRequest);
+                System.out.println(time + " : CLEAR invoke");
                 return;
             } catch (TelegramApiException e) {
                 //do some error handling
@@ -141,7 +143,8 @@ public class handler extends TelegramLongPollingBot {
 
                 }
 
-                data.add(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date()));
+                String time = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date());
+                data.add(time);
 
                 String output = tab.substring(0, 1).toUpperCase() + tab.substring(1);
 
@@ -157,6 +160,8 @@ public class handler extends TelegramLongPollingBot {
                     access.sortSheet(output,spreadsheetId);
                     sendMessageRequest.setText(output +" sheet sorted");
                     execute(sendMessageRequest);
+                    
+                    System.out.println(time + " : ACTION invoke");
 
                 } catch (TelegramApiException e) {
                     //do some error handling
