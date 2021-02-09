@@ -83,7 +83,7 @@ public class handler extends TelegramLongPollingBot {
             String time = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date());
 
             try {
-                access.clearRow(data);
+                access.clearRow(data,"1A1g6kCiFFnJnY__Md4wTgDj-7bak6emLBsQS_Vx98fs");
                 sendMessageRequest.setText("Deleted row"+ data.get(1) + " from"+ data.get(0) + "at "+ time);
                 execute(sendMessageRequest);
                 return;
