@@ -63,7 +63,7 @@ public class accessAPI {
         );
 
         //final Credential credential = new accessAPI().authorize(HTTP_TRANSPORT, JSON_FACTORY, CLIENT_ID, CLIENT_SECRET, SCOPE);
-        GoogleCredential credential = GoogleCredential.fromStream(new FileInputStream("/home/dev/telegramHandler/telegramHandler/src/main/java/access.json"))
+        GoogleCredential credential = GoogleCredential.fromStream(new FileInputStream("/home/dev/Messbuddy/telegramHandler/src/main/java/access.json"))
                 .createScoped(Collections.singleton(SCOPE));
 
         requestBody.setValues(values);
@@ -114,7 +114,7 @@ public class accessAPI {
         
         range = dataValue.get(0).trim() + range;
         
-        GoogleCredential credential = GoogleCredential.fromStream(new FileInputStream("/home/dev/telegramHandler/telegramHandler/src/main/java/access.json"))
+        GoogleCredential credential = GoogleCredential.fromStream(new FileInputStream("/home/dev/Messbuddy/telegramHandler/src/main/java/access.json"))
                 .createScoped(Collections.singleton(SCOPE));
 
         Sheets sheetsService = new Sheets.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential)
@@ -151,7 +151,7 @@ public class accessAPI {
         //set the range to e:g Extraction!A3:J3
         //String range = dataValue.get(0)+"!A"+dataValue.get(1)+":J"+dataValue.get(1);
 
-        GoogleCredential credential = GoogleCredential.fromStream(new FileInputStream("/home/dev/telegramHandler/telegramHandler/src/main/java/access.json"))
+        GoogleCredential credential = GoogleCredential.fromStream(new FileInputStream("/home/dev/Messbuddy/telegramHandler/src/main/java/access.json"))
                 .createScoped(Collections.singleton(SCOPE));
 
         Sheets sheetsService = new Sheets.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential)
@@ -180,7 +180,7 @@ public class accessAPI {
 
         //range = range.replaceAll("\\s+","");
 
-        GoogleCredential credential = GoogleCredential.fromStream(new FileInputStream("/home/dev/telegramHandler/telegramHandler/src/main/java/access.json"))
+        GoogleCredential credential = GoogleCredential.fromStream(new FileInputStream("/home/dev/Messbuddy/telegramHandler/src/main/java/access.json"))
                 .createScoped(Collections.singleton(SCOPE));
 
         Sheets sheetsService = new Sheets.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential)
@@ -249,7 +249,7 @@ public class accessAPI {
         /** Global instance of the JSON factory. */
         JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
 
-        GoogleCredential credential = GoogleCredential.fromStream(new FileInputStream("/home/dev/telegramHandler/telegramHandler/src/main/java/access.json"))
+        GoogleCredential credential = GoogleCredential.fromStream(new FileInputStream("/home/dev/Messbuddy/telegramHandler/src/main/java/access.json"))
                 .createScoped(SCOPES);
 
         Sheets sheetsService = new Sheets.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential)
