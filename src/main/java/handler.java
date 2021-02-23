@@ -57,7 +57,7 @@ public class handler extends TelegramLongPollingBot {
             }
 
         }
-        if(text != null && counter < 1 ) {
+        else if(text != null && counter < 1 ) {
             counter++;
             //create a object that contains the information to send back the message
             SendMessage sendMessageRequest = new SendMessage();
