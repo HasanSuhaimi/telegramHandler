@@ -50,6 +50,7 @@ public class handler extends TelegramLongPollingBot {
             sendMessageRequest.setText("test works!");
 
             try {
+                System.out.println("test..");
                 execute(sendMessageRequest);
             } catch (TelegramApiException e) {
                 //do some error handling
@@ -65,7 +66,6 @@ public class handler extends TelegramLongPollingBot {
 
             try {
                 execute(sendMessageRequest);
-                System.out.println("test..");
             } catch (TelegramApiException e) {
                 //do some error handling
             }
