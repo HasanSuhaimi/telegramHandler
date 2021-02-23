@@ -43,6 +43,20 @@ public class handler extends TelegramLongPollingBot {
 
         String textLower = text.toLowerCase();
 
+        if(textLower.contains("test-buddy") ) {
+            counter++;
+            //create a object that contains the information to send back the message
+            SendMessage sendMessageRequest = new SendMessage();
+            sendMessageRequest.setChatId(message.getChatId().toString());
+            sendMessageRequest.setText("test works!");
+
+            try {
+                execute(sendMessageRequest);
+            } catch (TelegramApiException e) {
+                //do some error handling
+            }
+
+        }
         if(text != null && counter < 1 ) {
             counter++;
             //create a object that contains the information to send back the message
@@ -52,6 +66,7 @@ public class handler extends TelegramLongPollingBot {
 
             try {
                 execute(sendMessageRequest);
+                System.out.println("test..");
             } catch (TelegramApiException e) {
                 //do some error handling
             }
